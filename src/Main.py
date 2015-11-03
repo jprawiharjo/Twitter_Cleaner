@@ -8,12 +8,9 @@ Created on Sun Nov 01 23:33:08 2015
 #!/usr/bin/env python
 
 # Import the necessary methods from tweepy library
-import ssl
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
-from datetime import datetime
-from pprint import pprint
 import json
 import os
 from tweetprocessor import *
