@@ -4,7 +4,7 @@ Solution for the InsightDataEngineering coding-challenge
 
 The *Main.py* contains the main program, while *tweetprocessor.py* contains the subroutine to process the tweets (i.e. feature 1), and to count the rolling average of the graph nodes (i.e. feature 2)
 
-Upon calling *run.sh*, the code will ask whether user wants to use the example file [ex] (*tweets.txt* in *tweet_input* folder), or the live stream data from Twitter [st], using the twitter API.
+Upon calling *run.sh*, the code will ask whether user wants to use the example file [ex ] (*tweets.txt* in *tweet_input* folder), or the live stream data from Twitter [st], using the twitter API.
 
 a *.twitter-example* file with the credentials need to exist in the src folder for the twitter API to work.
     
