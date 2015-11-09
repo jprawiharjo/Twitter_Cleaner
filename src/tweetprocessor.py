@@ -147,7 +147,7 @@ class SlidingWindow(object):
                     self.__graphs[tempkey] -= Counter(templist)
     
                     for l in range(len(templist)) :
-                        if not self.__graphs[tempkey].has_key(templist[l]):
+                        if self.__graphs[tempkey][templist[l]] == 0:
                             self.__sum -= 1
                     if len(self.__graphs[tempkey]) == 0:
                         del self.__graphs[tempkey]
