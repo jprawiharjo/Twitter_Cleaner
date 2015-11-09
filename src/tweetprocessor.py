@@ -8,7 +8,7 @@ import re
 import time
 import copy
 from datetime import datetime, timedelta
-from collections import deque
+from collections import deque, Counter
 
 ReHash = re.compile('#[0-9A-Za-z]+') # Regex to trap hashtags
 ReUcode = re.compile('\\\\u[0-9a-f]{4}') #regex to trap unicodes
@@ -121,20 +121,15 @@ class SlidingWindow(object):
                 
                 if tempkey not in self.__graphs:
                     #Initial count is 1 for each
-                    self.__graphs[tempkey] = {x: 1 for x in templist}
+                    self.__graphs[tempkey] = Counter(templist)
                     self.__sum += len(templist)
                     # Keep count for the total graph nodes
                     self.__denom += 1
                 else:
                     for l in range(len(templist)) :
                         if templist[l] not in self.__graphs[tempkey]:
-                            # New hashtags count is 1
-                            self.__graphs[tempkey][templist[l]] = 1
-                            # Keep count for the summation
                             self.__sum += 1
-                        else:
-                            # Old hashtags count is incremented by 1
-                            self.__graphs[tempkey][templist[l]] += 1
+                    self.__graphs[tempkey] += Counter(templist)
                 # Add the hashtags back to retain the cyclical manner
                 hashtags.append(tempkey)
 
@@ -148,13 +143,11 @@ class SlidingWindow(object):
                     # Remove hashtags in cyclical manner to the graph dictionary
                     tempkey = hashtags.popleft()
                     templist = list(copy.copy(hashtags))
+                    
+                    self.__graphs[tempkey] -= Counter(templist)
     
                     for l in range(len(templist)) :
-                        #Decrement hashtags count by 1 if it's removed
-                        self.__graphs[tempkey][templist[l]] -= 1
-    
-                        if self.__graphs[tempkey][templist[l]] == 0:
-                            del self.__graphs[tempkey][templist[l]]
+                        if not self.__graphs[tempkey].has_key(templist[l]):
                             self.__sum -= 1
                     if len(self.__graphs[tempkey]) == 0:
                         del self.__graphs[tempkey]
