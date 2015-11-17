@@ -38,17 +38,11 @@ class Tweets(object):
     
         # Process regex for unicode
         Ucode = False
-        a = ReUcode.finditer(txt)
-        for k in a:
-            y = k.group(0)
-            txt = txt.replace(y,'')
-            Ucode = True
+        txt2 = ReUcode.sub(" ", txt)
+        Ucode = not(txt2 <> txt)
+        txt = txt2
     
-        # Process regex for hashtags
-        hashtags = []        
-        b = ReHash.finditer(txt)
-        for k in b:
-            hashtags.append(k.group(0).lower())
+        hashtags = ReHash.findall(txt)
     
         # Process regex for escape sequences
         c = ReEscSeq.finditer(txt)
