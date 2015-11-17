@@ -42,7 +42,8 @@ class Tweets(object):
         Ucode = not(txt2 <> txt)
         txt = txt2
     
-        hashtags = ReHash.findall(txt)
+        hashtags = set(ReHash.findall(txt))
+        hashtags = map(str.lower,hashtags)
     
         # Process regex for escape sequences
         c = ReEscSeq.finditer(txt)
@@ -57,7 +58,7 @@ class Tweets(object):
         self.__timestamptxt = timestamptxt
         self.__timestamp = timestamp
         self.__ucode = Ucode
-        self.__hashtags = deque(set(hashtags))
+        self.__hashtags = deque(hashtags)
         return True            
 
     @property
